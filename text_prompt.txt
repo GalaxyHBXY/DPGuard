@@ -1,0 +1,45 @@
+Kindly conduct a comprehensive analysis of the given image to identify any deceptive patterns, employing the provided taxonomy. While examining the image, consider the following categories of deceptive patterns:
+
+1. **Nagging**: Spot any repetitive and unexpected pop-up windows that disrupt user activities.
+2. **Roach Motel**: Identify scenarios where opting in is easy, but opting out is complicated or obscure.
+3. **Price Comparison Prevention**: Detect any elements that hinder direct comparisons of prices or plans.
+4. **Intermediate Currency**: Look for instances where virtual currencies are used to obscure real financial costs.
+5. **Forced Continuity**: Examine if users are charged after a trial period ends without clear advance notice.
+6. **Hidden Costs**: Check for the late disclosure of additional costs such as taxes, delivery, or service fees.
+7. **Sneak into Basket**: Identify if items not actively selected by users are automatically added to the shopping cart.
+8. **Hidden Information**: Ensure that essential options or actions are not concealed or difficult to find.
+9. **Preselection**: Look for cases where options are preselected by default, without explicit user consent.
+10. **Toying with Emotion**: Evaluate design elements such as language, colors, or styles that are intended to elicit emotional responses and pressure users into making decisions.
+11. **False Hierarchy**: Observe if any option is made to appear more significant than other equivalent choices.
+12. **Disguised Ads**: Detect if advertisements are designed to resemble normal content.
+13. **Tricked Questions**: Identify any confusing or misleadingly worded questions.
+14. **Small Close Button**: Check if close buttons are too small to be easily located or clicked.
+15. **Social Pyramid**: Look for incentives encouraging users to share content with friends for rewards.
+16. **Privacy Zuckering**: Assess if default options necessitate sharing unnecessary personal information.
+17. **Gamification**: Note if users are required to repeatedly perform tasks to earn rewards.
+18. **Countdown on Ads**: Identify if timers restrict users from closing ads immediately.
+19. **Watch Ads to Unlock**: Check if users must watch advertisements to access particular features or rewards.
+20. **Pay to Avoid Ads**: Note if users are charged to remove adverts.
+21. **Forced Enrollment**: Determine if users must sign up or sign in before they can utilize the service.
+
+Additional steps for a thorough review:
+- **UI Color and Text**: Assess the user interface design elements such as color schemes and text that might manipulate user decisions. Focus particularly on color contrasts and overall readability.
+- **Information Visibility**: Verify that critical information is easily accessible without reliance on hidden links or convoluted navigation paths.
+- **User Experience Flow**: Evaluate the user journey to ensure smooth navigation with minimal interruptions.
+- **Call-to-Action Design**: Examine the visibility and clarity of call-to-action buttons and links compared to dismissive or less prominent options.
+- **Consistency**: Ensure that design elements and user expectations remain consistent across different pages or sections.
+
+Your detailed review and precise identification of any deceptive patterns in this image are crucial to understand their impact and effectiveness.
+
+If the image include any deceptive patterns, please return me at most(less or equal than) five deceptive pattern category by the following format:
+'''
+(DP label A, reason C for why this deceptive pattern category is violated)
+(DP label B, reason D for why this deceptive pattern category is violated)
+'''
+
+If no or missing information to determine, just return
+'''
+(No DP, No Reason as No Deceptive Pattern detected)
+'''
+
+Attention: You must return your result by what I expected format: '''(category name, reason)''' and you are only allowed to return the result. No additional text are allowed to be generated. Failed to follow the instruction will cause your answer be rejected.
