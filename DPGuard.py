@@ -1,5 +1,6 @@
 import base64
 import os
+from http.client import responses
 
 from Model import *
 from PIL import Image
@@ -7,6 +8,8 @@ import requests
 import time
 import torch
 from torchvision import transforms
+from google import genai
+from google.genai import types
 
 def load_parallel_model(model_path,devices="cpu"):
     # Load the entire model
@@ -36,12 +39,13 @@ def encode_images(image_path_list):
         res.append(data)
     return res
 
-def inquiry_GPT(image_prompt,text_prompt,model_name="gpt-4o"):
+def inquiry_GPT(image_path_list,text_prompt,model_name="gpt-4o"):
     api_key = os.environ.get("OPENAI_API_KEY")
     if api_key == None:
         raise ValueError("Please set the OPENAI_API_KEY environment variable via export OPENAI_API_KEY='your-key'")
 
     system_prompt = open("system_prompt.txt", "r").read()
+    image_prompt = encode_images(image_path_list)
 
     headers = {
         "Content-Type": "application/json",
@@ -81,7 +85,28 @@ def inquiry_GPT(image_prompt,text_prompt,model_name="gpt-4o"):
             return out
         except KeyError:
             time.sleep(0.5)
-            pass
+
+def inquiry_gemini(image_path_list,text_prompt,model_name="gemini-2.5-pro-exp-03-25"):
+    api_key = os.environ.get("GOOGLE_GEMINI_API_KEY")
+    if api_key == None:
+        raise ValueError("Please set the GOOGLE_GEMINI_API_KEY environment variable via export GOOGLE_GEMINI_API_KEY='your-key'")
+
+    system_prompt = open("system_prompt.txt", "r").read()
+
+    client = genai.Client(api_key = api_key)
+    image_prompt = [Image.open(each) for each in image_path_list]
+
+    while True:
+        try:
+            response = client.models.generate_content(
+                model=model_name,
+                config=types.GenerateContentConfig(
+                    system_instruction=system_prompt),
+                contents=[text_prompt]+image_prompt
+            )
+            return response.text
+        except:
+            time.sleep(60)
 
 
 class DPGuard():
@@ -99,11 +124,17 @@ class DPGuard():
 
     def detect(self,image_path):
         if self.binary_model(self.transformer(Image.open(image_path)).unsqueeze(0).to(self.devices))>0.5:
-            image_prompt = encode_images([image_path])
-            response = inquiry_GPT(image_prompt,self.text_prompt,self.mllm_model).lower()
+            if "gpt" in self.mllm_model:
+                response = inquiry_GPT([image_path],self.text_prompt,self.mllm_model).lower()
+            elif "gemini" in self.mllm_model:
+                response = inquiry_gemini([image_path],self.text_prompt,self.mllm_model).lower()
+            '''
+            Todo: Feel free to add more model in here
+            '''
+
             if "no dp" in response:
                 return """```\n(no dp, no reason as no deceptive pattern detected)\n```"""
             else:
-                return response
+                return f"""```\n{response}\n```"""
         else:
             return """```\n(no dp, no reason as no deceptive pattern detected)\n```"""

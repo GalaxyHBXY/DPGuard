@@ -18,15 +18,21 @@ Step 2: Required Package Installation
 
 ```
 pip3 install torch torchvision torchaudio requests
+pip3 install google-genai
 pip3 install numpy==1.26
 ```
 
 Note: The `torch` version we used in the paper is 2.6.0, which was the stable version at that time.
 
-Step 3: OpenAI API Key Setup
+Step 3(a): OpenAI API Key Setup
 
 ```
 export OPENAI_API_KEY="Your_OpenAI_API_Key"
+```
+step 3(b): Google Gemini API Key Setup
+
+```
+export GOOGLE_GENAI_API_KEY="Your_Google_GenAI_API_Key"
 ```
 
 Step 4: Run Detection
